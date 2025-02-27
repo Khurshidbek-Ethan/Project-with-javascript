@@ -637,12 +637,13 @@ form button {
 
 .promotion__timer .timer__block {
 	width: 100%;
-	background: #938791;
+	border-radius: 30px;
+	background: #e7ec8c;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 	font-size: 16px;
 	font-weight: 300;
 	text-align: center;
-	border: 1px solid #e4b95b;
+	border: 1px solid #986a04;
 	padding: 20px;
 }
 .promotion__timer .timer__block span {
@@ -875,6 +876,19 @@ form button {
 	}
 	to {
 		opacity: 1;
+	}
+}
+.modal_fade {
+	animation-name: modalFade;
+	animation-duration: 1.5s;
+}
+
+@keyframes modalFade {
+	from {
+		transform: translateY(-100px);
+	}
+	to {
+		transform: translateY(0);
 	}
 }
 

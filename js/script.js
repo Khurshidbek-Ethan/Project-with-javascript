@@ -47,17 +47,33 @@ window.addEventListener('DOMContentLoaded', () => {
 	const deadline = '2025-03-26'
 
 	function getTimerRemaining(endtime) {
-		const time = Date.parse(endtime) - Date.parse(new Date()),
-			days = Math.floor(time / (1000 * 60 * 60 * 24)),
-			hours = Math.floor((time / (1000 * 60 * 60)) % 24),
-			minutes = Math.floor((time / (1000 * 60)) % 60),
-			seconds = Math.floor((time / 1000) % 60)
+		let days, hours, minutes, seconds
+		const time = Date.parse(endtime) - Date.parse(new Date())
+		if (time <= 0) {
+			days = 0
+			hours = 0
+			minutes = 0
+			seconds = 0
+		} else {
+			;(days = Math.floor(time / (1000 * 60 * 60 * 24))),
+				(hours = Math.floor((time / (1000 * 60 * 60)) % 24)),
+				(minutes = Math.floor((time / (1000 * 60)) % 60)),
+				(seconds = Math.floor((time / 1000) % 60))
+		}
 		return {
 			totalTime: time,
 			days,
 			hours,
 			minutes,
 			seconds,
+		}
+	}
+
+	function formatNumber(number) {
+		if (number >= 0 && number < 10) {
+			return `0${number}`
+		} else {
+			return number
 		}
 	}
 
@@ -68,13 +84,15 @@ window.addEventListener('DOMContentLoaded', () => {
 			minutes = timer.querySelector('#minutes'),
 			seconds = timer.querySelector('#seconds'),
 			timeInterval = setInterval(updateClock, 1000)
+
 		updateClock()
+
 		function updateClock() {
 			const time = getTimerRemaining(endtime)
-			days.textContent = time.days
-			hours.textContent = time.hours
-			minutes.textContent = time.minutes
-			seconds.textContent = time.seconds
+			days.textContent = formatNumber(time.days)
+			hours.textContent = formatNumber(time.hours)
+			minutes.textContent = formatNumber(time.minutes)
+			seconds.textContent = formatNumber(time.seconds)
 
 			if (time.totalTime <= 0) {
 				clearInterval(timeInterval)
@@ -82,4 +100,41 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 	setClock('.timer', deadline)
+
+	// Modal
+	const modalOpenBtns = document.querySelectorAll('[data-modal ]'),
+		modal = document.querySelector('.modal'),
+		modalCloseBtn = document.querySelector('[data-modal-close]'),
+		modalContent = document.querySelector('.modal__content')
+
+	function openModel() {
+		modalContent.classList.add('.modal_fade')
+		modal.classList.add('show')
+		modal.classList.remove('hide')
+		// document.body.style.overflow = 'hidden'
+		clearInterval(modelTimerId)
+	}
+	modalOpenBtns.forEach(btn => {
+		btn.addEventListener('click', openModel)
+	})
+	function closeModel() {
+		modal.classList.add('hide')
+		modal.classList.remove('show')
+		document.body.style.overflow = ''
+	}
+	modalCloseBtn.addEventListener('click', closeModel)
+
+	modal.addEventListener('click', event => {
+		if (event.target === modal) {
+			closeModel()
+		}
+	})
+
+	document.addEventListener('keydown', event => {
+		if (event.code === 'Escape' && modal.classList.contains('show')) {
+			closeModel()
+		}
+	})
+
+	const modelTimerId = setTimeout(openModel, 6000)
 })
