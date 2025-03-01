@@ -137,4 +137,73 @@ window.addEventListener('DOMContentLoaded', () => {
 	})
 
 	const modelTimerId = setTimeout(openModel, 6000)
+
+	// Class
+
+	class OfferMenu {
+		constructor(src, alt, title, descr, discount, sale, parentSelector) {
+			this.src = src
+			this.alt = alt
+			this.title = title
+			this.descr = descr
+			this.discount = discount
+			this.sale = sale
+			this.parent = document.querySelector(parentSelector)
+			this.formatToUSD()
+		}
+
+		formatToUSD() {
+			this.discount = this.discount.toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			})
+			this.sale = this.sale.toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			})
+		}
+		render() {
+			const element = document.createElement('div')
+			element.innerHTML = `
+						<img src="${this.src}" alt="${this.alt}">
+						<div>
+							<h3>${this.title}</h3>
+							<p>${this.descr}</p>
+							<p><del>${this.discount}</del> <span class="primary-text">${this.sale}</span></p>
+						</div>
+
+			`
+			this.parent.append(element)
+		}
+	}
+
+	new OfferMenu(
+		'./img/offer1.png',
+		'Quattro Pasta',
+		'Quattro Pasta',
+		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+		'$ 55.00',
+		'$18.00',
+		'.offers-items'
+	).render()
+
+	new OfferMenu(
+		'./img/offer2.png',
+		'Vegertarian Pasta',
+		'Vegertarian Pasta',
+		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+		'$ 25.00',
+		'$15.00',
+		'.offers-items'
+	).render()
+
+	new OfferMenu(
+		'./img/offer3.png',
+		'Gluten-Free Pasta',
+		'Gluten-Free Pasta',
+		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+		'$ 40.00',
+		'$15.00',
+		'.offers-items'
+	).render()
 })
