@@ -104,7 +104,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	// Modal
 	const modalOpenBtns = document.querySelectorAll('[data-modal ]'),
 		modal = document.querySelector('.modal'),
-		modalCloseBtn = document.querySelector('[data-modal-close]'),
+		// modalCloseBtn = document.querySelector('[data-modal-close]'),
 		modalContent = document.querySelector('.modal__content')
 
 	function openModel() {
@@ -122,10 +122,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		modal.classList.remove('show')
 		document.body.style.overflow = ''
 	}
-	modalCloseBtn.addEventListener('click', closeModel)
+	// modalCloseBtn.addEventListener('click', closeModel)
 
 	modal.addEventListener('click', event => {
-		if (event.target === modal) {
+		if (
+			event.target === modal ||
+			event.target.getAttribute('data-modal-close') === ''
+		) {
 			closeModel()
 		}
 	})
@@ -136,7 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	})
 
-	const modelTimerId = setTimeout(openModel, 6000)
+	const modelTimerId = setTimeout(openModel, 50000)
 
 	// Class
 
@@ -177,33 +180,107 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	new OfferMenu(
-		'./img/offer1.png',
-		'Quattro Pasta',
-		'Quattro Pasta',
-		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
-		'$ 55.00',
-		'$18.00',
-		'.offers-items'
-	).render()
+	const offers = [
+		{
+			src: './img/offer1.png',
+			alt: 'Quattro Pasta',
+			title: 'Quattro Pasta',
+			descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+			discount: 75,
+			sale: 68,
+		},
+		{
+			src: './img/offer2.png',
+			alt: 'Vegertarian Pasta',
+			title: 'Vegertarian Pasta',
+			descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+			discount: 55,
+			sale: 48,
+		},
+		{
+			src: './img/offer3.png',
+			alt: 'Gluten-Free Pasta',
+			title: 'Gluten-Free Pasta',
+			descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+			discount: 25,
+			sale: 18,
+		},
+	]
 
-	new OfferMenu(
-		'./img/offer2.png',
-		'Vegertarian Pasta',
-		'Vegertarian Pasta',
-		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
-		'$ 25.00',
-		'$15.00',
-		'.offers-items'
-	).render()
+	offers.forEach(offer => {
+		const { src, alt, title, descr, discount, sale } = offer
+		new OfferMenu(
+			src,
+			alt,
+			title,
+			descr,
+			discount,
+			sale,
+			'.offers-items'
+		).render()
+	})
 
-	new OfferMenu(
-		'./img/offer3.png',
-		'Gluten-Free Pasta',
-		'Gluten-Free Pasta',
-		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
-		'$ 40.00',
-		'$15.00',
-		'.offers-items'
-	).render()
+	//  Form
+	const form = document.querySelector('form'),
+		telegramTokenBot = '7979610186:AAG8_jA2-XKfhHezYjlEYYXOiAxCthPydvk',
+		chatId = '6256749180'
+	const message = {
+		loading: 'Loading...',
+		success: 'Thanks for contacting with us',
+		failure: 'Something went wrong',
+	}
+	form.addEventListener('submit', event => {
+		event.preventDefault()
+		const loader = document.createElement('div')
+		loader.classList.add('loader')
+		loader.style.width = '20px'
+		loader.style.height = '20px'
+		loader.style.marginTop = '20px'
+
+		form.append(loader)
+		const formData = new FormData(form)
+		const object = {}
+		formData.forEach((value, key) => {
+			object[key] = value
+		})
+		// console.log(object)
+
+		fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				chat_id: chatId,
+				text: `Name:${object.name},Phone:${object.phone}`,
+			}),
+		})
+			.then(() => {
+				showStatusMessage(message.success)
+				form.reset()
+			})
+			.catch(() => showStatusMessage(message.failure))
+			.finally(() => {
+				loader.remove()
+			})
+	})
+
+	function showStatusMessage(message) {
+		const modalDialog = document.querySelector('.modal__dialog')
+		modalDialog.classList.add('hide')
+		openModel()
+
+		const statusModal = document.createElement('div')
+		statusModal.classList.add('modal__dialog')
+		statusModal.innerHTML = `
+					<div class="modal__content">
+					<div data-modal-close class="modal__close">&times;</div>
+					<div class="modal__title">${message}</div >
+					</div>
+			`
+		document.querySelector('.modal').append(statusModal)
+		setTimeout(() => {
+			statusModal.remove()
+			modalDialog.classList.remove('hide')
+			closeModel()
+		}, 4000)
+	}
 })
