@@ -243,9 +243,10 @@ header * {
 }
 
 #menu .menu-items {
-	display: flex;
+	display: grid;
 	justify-content: center;
 	align-items: center;
+	grid-template-columns: 1fr 1fr;
 }
 
 #menu .menu-items .menu-item {

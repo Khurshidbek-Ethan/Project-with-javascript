@@ -24,5 +24,93 @@
 			"discount": 25,
 			"sale": 18
 		}
+	],
+
+	"ourMenu":[
+		{
+			"src": "./img/food1.png",
+			"alt": "LASAL Cheese",
+			"title": "LASAL CHEESE",
+			"sale": "18.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food2.png",
+			"alt": "JUMBO CRAB SHRIMP",
+			"title": "JUMBO CRAB SHRIMP",
+			"sale": "24.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food3.png",
+			"alt": "KOKTAIL JUCIE",
+			"title": "KOKTAIL JUCIE",
+			"sale": "12.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food4.png",
+			"alt": "CAPO STEAK",
+			"title": "CAPO STEAK",
+			"sale": "60.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food5.png",
+			"alt": "ORGANIC FRUIT SALA",
+			"title": "ORGANIC FRUIT SALA",
+			"sale": "8.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food6.png",
+			"alt": "CHEESE PIZZA",
+			"title": "CHEESE PIZZA",
+			"sale": "18.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food7.jpeg",
+			"alt": "KOFTA MEAT",
+			"title": "KOFTA MEAT",
+			"sale": "40.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food8.jpeg",
+			"alt": "SPANISH PIES",
+			"title": "SPANISH PIES",
+			"sale": "14.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food9.jpeg",
+			"alt": "CHEESE TOST",
+			"title": "CHEESE TOST",
+			"sale": "6.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food10.jpeg",
+			"alt": "FRUIT SALAD",
+			"title": "FRUIT SALAD",
+			"sale": "14.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food11.jpeg",
+			"alt": "CHICKEN SHAWARMA",
+			"title": "CHICKEN SHAWARMA",
+			"sale": "18.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		},
+		{
+			"src": "./img/food12.jpeg",
+			"alt": "MEGA CHEESE PIZZ",
+			"title": "MEGA CHEESE PIZZ",
+			"sale": "30.00",
+			"descr": "Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo."
+		}
 	]
 }
+
