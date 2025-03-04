@@ -12,7 +12,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function classCard(selectorClass){
+/* harmony import */ var _services_get_resources__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/get-resources */ "./js/services/get-resources.js");
+
+function classCard(selectorClass) {
 	class OfferMenu {
 		constructor(src, alt, title, descr, discount, sale, parentSelector) {
 			this.src = src
@@ -49,26 +51,20 @@ function classCard(selectorClass){
 			this.parent.append(element)
 		}
 	}
-
-	fetch('http://localhost:3000/offers', {
-		method: 'GET',
-		headers: { 'Content-Type': 'application/json' },
-	})
-		.then(res => res.json())
-		.then(data => {
-			data.forEach(offer => {
-				const { src, alt, title, descr, discount, sale } = offer
-				new OfferMenu(
-					src,
-					alt,
-					title,
-					descr,
-					discount,
-					sale,
-					selectorClass,
-				).render()
-			})
+	(0,_services_get_resources__WEBPACK_IMPORTED_MODULE_0__["default"])().then((data) => {
+		data.forEach(offer => {
+			const { src, alt, title, descr, discount, sale } = offer
+			new OfferMenu(
+				src,
+				alt,
+				title,
+				descr,
+				discount,
+				sale,
+				selectorClass,
+			).render()
 		})
+	})
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (classCard);
@@ -86,6 +82,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./js/modules/modal.js");
+/* harmony import */ var _services_get_resources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/get-resources */ "./js/services/get-resources.js");
 
 
 function forms(formSelector, modalTimerId) {
@@ -116,15 +113,7 @@ chatId = '6256749180'
 			object[key] = value
 		})
 
-		fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				chat_id: chatId,
-				text: `Name: ${object.name}. Phone: ${object.phone}`,
-			}),
-		})
-			.then(() => {
+		;(0,_services_get_resources__WEBPACK_IMPORTED_MODULE_1__.formDataPost)(telegramTokenBot,chatId).then(() => {
 				showStatusMessage(message.success)
 				form.reset()
 			})
@@ -534,6 +523,66 @@ function timer(deadline, selector) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (timer);
+
+/***/ }),
+
+/***/ "./js/services/get-resources.js":
+/*!**************************************!*\
+  !*** ./js/services/get-resources.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   formDataPost: () => (/* binding */ formDataPost)
+/* harmony export */ });
+
+async function getResources() {
+
+	try {
+		const response = await fetch('http://localhost:3000/offers')
+		return await response.json()
+	} catch (err) {
+		console.log(err);
+	} finally {
+		console.log("Finally");
+		
+	}
+
+}
+
+// fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
+// 			method: 'POST',
+// 			headers: { 'Content-Type': 'application/json' },
+// 			body: JSON.stringify({
+// 				chat_id: chatId,
+// 				text: `Name: ${object.name}. Phone: ${object.phone}`,
+// 			}),
+// 		})
+// 			.then(() => {
+// 				showStatusMessage(message.success)
+// 				form.reset()
+// 			})
+// 			.catch(() => showStatusMessage(message.failure))
+// 			.finally(() => loader.remove())
+
+async function formDataPost(telegramTokenBot,chatId) {
+	try {
+		const respomse = await fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				chat_id: chatId,
+				text: `Name: ${object.name}. Phone: ${object.phone}`,
+			}),
+		})
+	} catch (err) {
+		
+	}
+}
+	
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getResources);
 
 /***/ })
 

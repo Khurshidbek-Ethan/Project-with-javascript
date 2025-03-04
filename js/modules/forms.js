@@ -1,5 +1,5 @@
 import { closeModal, openModal } from './modal'
-
+import {formDataPost} from '../services/get-resources'
 function forms(formSelector, modalTimerId) {
 	const form = document.querySelector(formSelector),
 		
@@ -28,15 +28,7 @@ chatId = '6256749180'
 			object[key] = value
 		})
 
-		fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				chat_id: chatId,
-				text: `Name: ${object.name}. Phone: ${object.phone}`,
-			}),
-		})
-			.then(() => {
+		formDataPost(telegramTokenBot,chatId).then(() => {
 				showStatusMessage(message.success)
 				form.reset()
 			})
